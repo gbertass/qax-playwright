@@ -1,4 +1,4 @@
-import {test } from '@playwright/test'
+import {test, expect } from '@playwright/test'
 import { faker } from '@faker-js/faker'
 import { TaskModel } from './fixtures/task.model'
 import { deteleTaskByHelper, postTask } from './support/helpers'
@@ -14,6 +14,24 @@ import { TasksPage } from './support/pages/tasks'
 //     expect(newTask.ok()).toBeTruthy() 
 // } EXPORTADOS PARA OUTRO FICHEIRO
 
+
+test('Cadastrar tarefa sem nome , campo obrigatório', async ({page}) => {
+    const task: TaskModel = {
+        name: '', //vazio, para não enviar nenhum título
+        is_done: false
+    }
+
+    const tasksPage: TasksPage = new TasksPage(page) //instancia a página
+
+    await tasksPage.go()
+    await tasksPage.create(task) //chamada da função create enviando elemento em branco
+
+
+
+    const validationMessage = await tasksPage.inputTaskName.evaluate(e => (e as HTMLInputElement).validationMessage)
+    expect(validationMessage).toEqual('This is a required field')
+
+})
 
 test('Deve poder cadastrar uma nova tarefa4', async ({page, request}) => {
     
@@ -40,11 +58,13 @@ test('Não deve permitir tarefa duplicada', async ({page, request}) => {
     } //tipando a minha massa de teste com a interface que representa o tipo de dado
 
     await deteleTaskByHelper(request, task.name)
-    
+    await postTask(request, task)
+
     const tasksPage: TasksPage = new TasksPage(page) //objeto que representa a página de tarefas e possui funções: 
 
     await tasksPage.go() //função que acessa
     await tasksPage.create(task) //função que cadastra
+    await page.waitForLoadState('networkidle')
     await tasksPage.alertHaveText('Task already exists!') //função que verifica a existência de msg de erro
 
 })

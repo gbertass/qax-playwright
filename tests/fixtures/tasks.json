@@ -1,0 +1,28 @@
+{
+
+
+    "required": {
+        "name": "",
+        "is_done": false
+    },
+
+    "success": {
+        "name" : "Ler um livro em TypeScript", 
+        "is_done": false
+    }, 
+
+    "duplicate": {
+        "name":"Comprar livros de suspense",
+        "is_done": false
+    },
+
+    "update": {
+        "name": "Pagar a fatura do cartão de crédito", 
+        "is_done": false
+    },
+
+    "delete": {
+        "name": "Estudar Programação e QA", 
+        "is_done": false
+    }
+}
