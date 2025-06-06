@@ -1,5 +1,4 @@
 import {test, expect } from '@playwright/test'
-import { faker } from '@faker-js/faker'
 import { TaskModel } from './fixtures/task.model'
 import { deteleTaskByHelper, postTask } from './support/helpers'
 import { TasksPage } from './support/pages/tasks'
