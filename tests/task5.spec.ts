@@ -7,7 +7,7 @@ import data from './fixtures/tasks.json'
 let tasksPage: TasksPage
 
 test.beforeEach(({page}) => {
-    tasksPage = new TasksPage(page) //instancia o pageObject
+    tasksPage = new TasksPage(page) //instancia o pageObject e assim já não precisamos colocar o page em todos os testes
 })
 
 test.describe('cadastro', () => {
